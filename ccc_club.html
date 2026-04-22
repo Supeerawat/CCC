@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC - ชมรมต่อคำศัพท์ภาษาอังกฤษ โรงเรียนชุมแพศึกษา</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Sarabun:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0a1628;
+    --deep: #0d1f3c;
+    --gold: #c9a227;
+    --gold-light: #e8c247;
+    --cream: #f5f0e8;
+    --white: #ffffff;
+    --gray: #8a8fa8;
+    --accent: #1a3a6b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--cream);
+    font-family: 'Sarabun', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 4rem;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,162,39,0.2);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201,162,39,0.4);
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase;
+    font-weight: 600; position: relative; padding-bottom: 4px;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: 0; left: 0;
+    width: 0; height: 1px; background: var(--gold);
+    transition: width 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    padding: 6rem 2rem 4rem;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(26,58,107,0.5) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(201,162,39,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(13,31,60,0.8) 0%, transparent 70%);
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,162,39,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,39,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .letters-float {
+    position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  }
+  .float-letter {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    color: rgba(201,162,39,0.06);
+    font-size: clamp(60px, 10vw, 140px);
+    animation: floatUp linear infinite;
+    user-select: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(110vh) rotate(-10deg); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-20vh) rotate(10deg); opacity: 0; }
+  }
+
+  .hero-eyebrow {
+    font-size: 0.8rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700;
+    margin-bottom: 1.5rem;
+    animation: fadeInDown 1s ease both;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 15vw, 12rem);
+    line-height: 0.9;
+    letter-spacing: 8px;
+    color: var(--white);
+    text-shadow: 0 0 80px rgba(201,162,39,0.3);
+    animation: fadeInDown 1s 0.2s ease both;
+    position: relative; z-index: 1;
+  }
+  .hero-title span { color: var(--gold); }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    color: var(--cream);
+    opacity: 0.85;
+    margin-top: 1.2rem;
+    max-width: 600px;
+    animation: fadeInDown 1s 0.4s ease both;
+    position: relative; z-index: 1;
+  }
+  .hero-school {
+    margin-top: 0.5rem;
+    font-size: 0.95rem; letter-spacing: 2px;
+    color: var(--gold-light); opacity: 0.7;
+    animation: fadeInDown 1s 0.5s ease both;
+  }
+
+  .hero-cta {
+    margin-top: 3rem; display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeInDown 1s 0.7s ease both; position: relative; z-index: 1;
+  }
+  .btn-primary {
+    padding: 0.8rem 2.5rem; background: var(--gold);
+    color: var(--navy); font-weight: 700; letter-spacing: 2px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    text-decoration: none; font-family: 'Sarabun', sans-serif;
+    font-size: 0.85rem;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.4);
+  }
+  .btn-outline {
+    padding: 0.8rem 2.5rem; background: transparent;
+    color: var(--cream); font-weight: 600; letter-spacing: 2px;
+    text-transform: uppercase; border: 1px solid rgba(245,240,232,0.3); cursor: pointer;
+    text-decoration: none; font-family: 'Sarabun', sans-serif;
+    font-size: 0.85rem;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    border-color: var(--gold); color: var(--gold);
+    transform: translateY(-2px);
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+    color: var(--gray); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase;
+    animation: fadeInDown 2s 1.2s ease both;
+  }
+  .scroll-line {
+    width: 1px; height: 50px; background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s ease infinite;
+  }
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { padding: 6rem 4rem; }
+
+  .section-label {
+    font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase;
+    color: var(--gold); font-weight: 700; margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.15;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .gold-line {
+    width: 60px; height: 3px; background: var(--gold);
+    margin-bottom: 2rem;
+  }
+
+  /* ─── ABOUT ─── */
+  #about {
+    background: var(--deep);
+    position: relative; overflow: hidden;
+  }
+  #about::before {
+    content: 'CCC';
+    position: absolute; right: -2rem; top: 50%; transform: translateY(-50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20rem; color: rgba(201,162,39,0.03);
+    user-select: none; pointer-events: none; line-height: 1;
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+    align-items: center; max-width: 1200px; margin: 0 auto;
+  }
+  .about-text p {
+    color: rgba(245,240,232,0.75); line-height: 1.9; font-size: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .stats-box {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  }
+  .stat-card {
+    background: rgba(201,162,39,0.05);
+    border: 1px solid rgba(201,162,39,0.15);
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 0; background: var(--gold);
+    transition: height 0.4s;
+  }
+  .stat-card:hover::before { height: 100%; }
+  .stat-card:hover {
+    background: rgba(201,162,39,0.1);
+    transform: translateY(-4px);
+  }
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem; color: var(--gold);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gray); margin-top: 0.5rem;
+  }
+
+  /* ─── HISTORY ─── */
+  #history { background: var(--navy); }
+  .history-inner { max-width: 900px; margin: 0 auto; }
+
+  .timeline {
+    position: relative; margin-top: 3rem;
+  }
+  .timeline::before {
+    content: ''; position: absolute;
+    left: 120px; top: 0; bottom: 0;
+    width: 1px; background: linear-gradient(to bottom, var(--gold), rgba(201,162,39,0.1));
+  }
+
+  .timeline-item {
+    display: flex; gap: 3rem; margin-bottom: 3rem;
+    position: relative; align-items: flex-start;
+    opacity: 0; transform: translateX(-30px);
+    animation: slideIn 0.8s ease forwards;
+  }
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.25s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.4s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.55s; }
+  .timeline-item:nth-child(5) { animation-delay: 0.7s; }
+
+  @keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .timeline-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--gold);
+    min-width: 100px; text-align: right;
+    padding-top: 0.2rem;
+  }
+  .timeline-dot {
+    width: 14px; height: 14px;
+    background: var(--gold); border-radius: 50%;
+    position: relative; flex-shrink: 0; margin-top: 0.4rem;
+    box-shadow: 0 0 0 4px rgba(201,162,39,0.2), 0 0 20px rgba(201,162,39,0.4);
+  }
+  .timeline-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; color: var(--white); margin-bottom: 0.5rem;
+  }
+  .timeline-content p {
+    color: rgba(245,240,232,0.65); line-height: 1.7; font-size: 0.95rem;
+  }
+
+  /* ─── ACHIEVEMENTS ─── */
+  #achievements { background: var(--deep); }
+  .achievements-inner { max-width: 1200px; margin: 0 auto; }
+  .achievements-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
+    margin-top: 3rem;
+  }
+  .achievement-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 2.5rem 2rem;
+    position: relative; overflow: hidden;
+    transition: all 0.4s;
+    cursor: default;
+  }
+  .achievement-card::after {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 3px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s;
+  }
+  .achievement-card:hover {
+    background: rgba(201,162,39,0.05);
+    border-color: rgba(201,162,39,0.2);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .achievement-card:hover::after { transform: scaleX(1); }
+
+  .card-icon {
+    font-size: 2.5rem; margin-bottom: 1.2rem;
+  }
+  .card-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem; letter-spacing: 4px;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; color: var(--white);
+    margin-bottom: 0.8rem; line-height: 1.3;
+  }
+  .card-desc {
+    color: rgba(245,240,232,0.6); font-size: 0.9rem; line-height: 1.7;
+  }
+  .card-badge {
+    display: inline-block; margin-top: 1.2rem;
+    padding: 0.3rem 1rem;
+    border: 1px solid rgba(201,162,39,0.4);
+    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* ─── ACTIVITIES ─── */
+  #activities { background: var(--navy); }
+  .activities-inner { max-width: 1200px; margin: 0 auto; }
+  .activities-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .activity-card {
+    background: var(--accent);
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    border-left: 3px solid var(--gold);
+    transition: all 0.3s;
+  }
+  .activity-card:hover {
+    background: rgba(26,58,107,0.8);
+    transform: translateX(6px);
+  }
+  .activity-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: var(--white);
+    margin-bottom: 0.7rem;
+  }
+  .activity-card p {
+    color: rgba(245,240,232,0.65); font-size: 0.9rem; line-height: 1.6;
+  }
+  .activity-tag {
+    display: inline-block; margin-top: 1rem;
+    padding: 0.2rem 0.8rem;
+    background: rgba(201,162,39,0.1);
+    color: var(--gold); font-size: 0.75rem; letter-spacing: 1px;
+  }
+
+  /* ─── MEMBERS ─── */
+  #members { background: var(--deep); }
+  .members-inner { max-width: 1100px; margin: 0 auto; }
+  .members-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;
+    margin-top: 3rem;
+  }
+  .member-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border: 1px solid rgba(201,162,39,0.1);
+    transition: all 0.3s;
+    position: relative;
+  }
+  .member-card:hover {
+    border-color: rgba(201,162,39,0.4);
+    background: rgba(201,162,39,0.05);
+    transform: translateY(-4px);
+  }
+  .member-avatar {
+    width: 80px; height: 80px;
+    background: linear-gradient(135deg, var(--accent), var(--navy));
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 1rem;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem; color: var(--gold);
+  }
+  .member-name {
+    font-weight: 700; font-size: 1rem; color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .member-role {
+    font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.5rem;
+  }
+  .member-class {
+    font-size: 0.85rem; color: var(--gray);
+  }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    background: var(--navy);
+    text-align: center;
+  }
+  .contact-inner { max-width: 700px; margin: 0 auto; }
+  .contact-inner .section-title { text-align: center; }
+  .gold-line { margin: 0 auto 2rem; }
+  .contact-desc {
+    color: rgba(245,240,232,0.7); line-height: 1.8; margin-bottom: 3rem;
+  }
+  .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.7rem;
+    color: var(--cream); text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid rgba(245,240,232,0.15);
+    transition: all 0.3s;
+    font-size: 0.9rem;
+  }
+  .contact-link:hover {
+    border-color: var(--gold); color: var(--gold);
+    transform: translateY(-2px);
+  }
+  .contact-icon { font-size: 1.2rem; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #060e1a;
+    padding: 2.5rem 4rem;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(201,162,39,0.1);
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem; letter-spacing: 4px; color: var(--gold);
+  }
+  .footer-text {
+    color: var(--gray); font-size: 0.85rem; text-align: center;
+  }
+  .footer-right {
+    color: var(--gray); font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .timeline::before { left: 80px; }
+    .timeline-year { min-width: 70px; font-size: 1.4rem; }
+    .activities-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; padding: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CCC</div>
+  <ul class="nav-links">
+    <li><a href="#about">เกี่ยวกับ</a></li>
+    <li><a href="#history">ประวัติ</a></li>
+    <li><a href="#achievements">ผลงาน</a></li>
+    <li><a href="#activities">กิจกรรม</a></li>
+    <li><a href="#members">สมาชิก</a></li>
+    <li><a href="#contact">ติดต่อ</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="letters-float" id="lettersFloat"></div>
+
+  <p class="hero-eyebrow">โรงเรียนชุมแพศึกษา · Chumpae Süksa School</p>
+  <h1 class="hero-title"><span>C</span>CC</h1>
+  <p class="hero-subtitle">ชมรมต่อคำศัพท์ภาษาอังกฤษ</p>
+  <p class="hero-school">Chumpae Crossword Club</p>
+  <div class="hero-cta">
+    <a href="#achievements" class="btn-primary">ดูผลงาน</a>
+    <a href="#about" class="btn-outline">รู้จักเรา</a>
+  </div>
+
+  <div class="scroll-hint">
+    <span>เลื่อนลง</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text">
+      <p class="section-label">เกี่ยวกับชมรม</p>
+      <h2 class="section-title">สร้างนักต่อคำ<br>ระดับประเทศ</h2>
+      <div class="gold-line"></div>
+      <p>ชมรมต่อคำศัพท์ภาษาอังกฤษ (CCC – Chumpae Crossword Club) เป็นชมรมที่มุ่งพัฒนาทักษะภาษาอังกฤษผ่านกิจกรรมการแข่งขันต่อคำศัพท์ (Crossword) ซึ่งเป็นกีฬาทางปัญญาที่ฝึกทั้งคำศัพท์ กลยุทธ์ และความรอบรู้</p>
+      <p>ภายใต้การดูแลของคณะครูที่มีความเชี่ยวชาญ ชมรมของเรามุ่งมั่นผลิตนักกีฬาต่อคำที่มีความสามารถระดับภาค และระดับชาติ พร้อมปลูกฝังรักในภาษาอังกฤษให้กับนักเรียนโรงเรียนชุมแพศึกษา</p>
+      <p>ทุกสัปดาห์เราฝึกซ้อมอย่างจริงจัง วิเคราะห์กลยุทธ์ แลกเปลี่ยนเทคนิค และร่วมกันพัฒนาทักษะไปด้วยกันในฐานะทีม</p>
+    </div>
+    <div class="stats-box">
+      <div class="stat-card">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">ปีที่ก่อตั้ง</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">สมาชิกทั้งหมด</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">30+</div>
+        <div class="stat-label">รางวัลที่ได้รับ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">5×</div>
+        <div class="stat-label">แชมป์ระดับภาค</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORY -->
+<section id="history">
+  <div class="history-inner">
+    <p class="section-label">ประวัติชมรม</p>
+    <h2 class="section-title">จุดเริ่มต้นสู่<br>ความสำเร็จ</h2>
+    <div class="gold-line"></div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2557</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>ก่อตั้งชมรม CCC</h3>
+          <p>ชมรมต่อคำศัพท์ภาษาอังกฤษก่อตั้งขึ้นโดยกลุ่มนักเรียนและครูที่มีความสนใจในกีฬาทางปัญญา เปิดรับสมาชิกรุ่นแรก 20 คน เริ่มฝึกซ้อมอย่างเป็นทางการในห้องปฏิบัติการภาษา</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2559</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>เหรียญแรกระดับภาค</h3>
+          <p>สมาชิกรุ่นที่ 2 คว้าเหรียญทองแดงในการแข่งขันต่อคำศัพท์ระดับภาคตะวันออกเฉียงเหนือ เป็นครั้งแรกในประวัติศาสตร์ชมรม นับเป็นจุดเริ่มต้นของความภาคภูมิใจ</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2561</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>แชมป์ภาคครั้งแรก</h3>
+          <p>CCC คว้าแชมป์ระดับภาคตะวันออกเฉียงเหนือได้เป็นครั้งแรก และผ่านเข้าสู่การแข่งขันระดับประเทศ สร้างชื่อเสียงให้โรงเรียนชุมแพศึกษาในระดับชาติ</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2563</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>ปรับตัวสู่ยุคดิจิทัล</h3>
+          <p>ในช่วงสถานการณ์โควิด-19 ชมรมปรับรูปแบบการฝึกซ้อมเป็นออนไลน์ พัฒนาระบบการฝึกซ้อมผ่านแพลตฟอร์มดิจิทัล ทำให้สมาชิกยังคงพัฒนาทักษะได้อย่างต่อเนื่อง</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2566</div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <h3>ยุคทองของ CCC</h3>
+          <p>ชมรมเติบโตถึง 50+ สมาชิก คว้าแชมป์ระดับภาคต่อเนื่อง และมีศิษย์เก่าที่กลับมาเป็นโค้ช ถ่ายทอดประสบการณ์สู่รุ่นน้อง เสริมสร้างความเข้มแข็งให้ชมรมอย่างยั่งยืน</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="achievements-inner">
+    <p class="section-label">ผลงานและรางวัล</p>
+    <h2 class="section-title">ความภาคภูมิใจ<br>ของชุมแพ</h2>
+    <div class="gold-line"></div>
+    <div class="achievements-grid">
+
+      <div class="achievement-card">
+        <div class="card-icon">🏆</div>
+        <div class="card-year">2566 · ระดับชาติ</div>
+        <div class="card-title">รองแชมป์ประเทศไทย ประเภท ม.ต้น</div>
+        <div class="card-desc">นักเรียนทีม CCC Junior คว้ารางวัลรองชนะเลิศอันดับ 1 ในการแข่งขันต่อคำศัพท์ระดับประเทศ กรุงเทพมหานคร</div>
+        <span class="card-badge">🥈 เหรียญเงิน</span>
+      </div>
+
+      <div class="achievement-card">
+        <div class="card-icon">🎖️</div>
+        <div class="card-year">2565 · ระดับภาค</div>
+        <div class="card-title">แชมป์ภาคตะวันออกเฉียงเหนือ ทีม A</div>
+        <div class="card-desc">ทีม A ของ CCC ป้องกันแชมป์ระดับภาคได้สำเร็จ พร้อมกวาดรางวัลนักกีฬายอดเยี่ยม 2 ตำแหน่ง</div>
+        <span class="card-badge">🥇 เหรียญทอง</span>
+      </div>
+
+      <div class="achievement-card">
+        <div class="card-icon">⭐</div>
+        <div class="card-year">2565 · ระดับภาค</div>
+        <div class="card-title">รองแชมป์ภาค ประเภท ม.ปลาย</div>
+        <div class="card-desc">ทีม Senior ลงแข่งขันเป็นครั้งแรก และสามารถคว้ารางวัลรองชนะเลิศ สร้างความประทับใจให้กับทุกคน</div>
+        <span class="card-badge">🥈 เหรียญเงิน</span>
+      </div>
+
+      <div class="achievement-card">
+        <div class="card-icon">🏅</div>
+        <div class="card-year">2564 · ระดับจังหวัด</div>
+        <div class="card-title">แชมป์จังหวัดขอนแก่น 4 ปีซ้อน</div>
+        <div class="card-desc">CCC ครองความเป็นผู้นำระดับจังหวัดขอนแก่น ส่งทีมเข้าแข่งขันและคว้าแชมป์ในทุกรุ่นที่ส่งเข้าแข่ง</div>
+        <span class="card-badge">🥇 แชมป์ 4 สมัย</span>
+      </div>
+
+      <div class="achievement-card">
+        <div class="card-icon">✨</div>
+        <div class="card-year">2563 · ระดับภาค</div>
+        <div class="card-title">นักกีฬายอดเยี่ยมแห่งปี ภาคอีสาน</div>
+        <div class="card-desc">สมาชิก CCC ได้รับการคัดเลือกเป็นนักกีฬาต่อคำยอดเยี่ยมแห่งปีของภาคตะวันออกเฉียงเหนือ</div>
+        <span class="card-badge">👑 MVP</span>
+      </div>
+
+      <div class="achievement-card">
+        <div class="card-icon">📚</div>
+        <div class="card-year">2562 · ระดับชาติ</div>
+        <div class="card-title">เข้ารอบ 8 ทีมสุดท้าย ระดับประเทศ</div>
+        <div class="card-desc">ก้าวสำคัญของ CCC เมื่อทีม A สามารถผ่านเข้าสู่รอบ 8 ทีมสุดท้ายในการแข่งขันระดับประเทศเป็นครั้งแรก</div>
+        <span class="card-badge">🏆 Top 8</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities">
+  <div class="activities-inner">
+    <p class="section-label">กิจกรรม</p>
+    <h2 class="section-title">สิ่งที่เราทำ<br>ทุกสัปดาห์</h2>
+    <div class="gold-line"></div>
+    <div class="activities-grid">
+
+      <div class="activity-card">
+        <h3>🔤 ฝึกซ้อมประจำสัปดาห์</h3>
+        <p>ฝึกซ้อมต่อคำศัพท์ 3 ชั่วโมงต่อสัปดาห์ แบ่งตามระดับความสามารถ มีโค้ชดูแลอย่างใกล้ชิด</p>
+        <span class="activity-tag">ทุกวันพุธ · 15:30</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>📖 เรียนรู้คำศัพท์ใหม่</h3>
+        <p>รวบรวมคำศัพท์หายากและกลยุทธ์การต่อคำ แลกเปลี่ยนความรู้ระหว่างรุ่นพี่รุ่นน้อง</p>
+        <span class="activity-tag">ทุกวันศุกร์ · 16:00</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>🥊 จำลองการแข่งขัน</h3>
+        <p>จัดการแข่งขันจำลองภายในชมรม เพื่อเตรียมความพร้อมและวัดระดับความสามารถของสมาชิก</p>
+        <span class="activity-tag">รายเดือน</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>🧩 Workshop กลยุทธ์</h3>
+        <p>เวิร์กช็อปพิเศษจากโค้ชและศิษย์เก่า เจาะลึกเทคนิคการต่อคำในสถานการณ์จริง</p>
+        <span class="activity-tag">ทุกเดือน</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>🏟️ เข้าร่วมแข่งขัน</h3>
+        <p>ส่งทีมเข้าร่วมแข่งขันระดับจังหวัด ภาค และชาติ ตลอดทั้งปีการศึกษา</p>
+        <span class="activity-tag">ตลอดปีการศึกษา</span>
+      </div>
+
+      <div class="activity-card">
+        <h3>🎓 ค่ายภาษาอังกฤษ</h3>
+        <p>จัดค่ายพัฒนาทักษะภาษาอังกฤษผสมผสานกับการต่อคำ สำหรับนักเรียนที่สนใจเข้าร่วมชมรม</p>
+        <span class="activity-tag">ปิดเทอม</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members">
+  <div class="members-inner">
+    <p class="section-label">สมาชิกปัจจุบัน</p>
+    <h2 class="section-title">ทีมงาน CCC<br>ปีการศึกษา 2567</h2>
+    <div class="gold-line"></div>
+    <div class="members-grid">
+
+      <div class="member-card">
+        <div class="member-avatar">KN</div>
+        <div class="member-name">ครูกนกวรรณ</div>
+        <div class="member-role">ที่ปรึกษาชมรม</div>
+        <div class="member-class">อาจารย์ที่ปรึกษา</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">PT</div>
+        <div class="member-name">ปรียาทิพย์</div>
+        <div class="member-role">ประธานชมรม</div>
+        <div class="member-class">ม.5/2</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">NT</div>
+        <div class="member-name">นทีธร</div>
+        <div class="member-role">รองประธาน</div>
+        <div class="member-class">ม.5/1</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">WC</div>
+        <div class="member-name">วิชญา</div>
+        <div class="member-role">หัวหน้าทีม A</div>
+        <div class="member-class">ม.4/3</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">PK</div>
+        <div class="member-name">พลกฤต</div>
+        <div class="member-role">หัวหน้าทีม B</div>
+        <div class="member-class">ม.3/2</div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-avatar">SR</div>
+        <div class="member-name">สิริรัตน์</div>
+        <div class="member-role">เลขานุการ</div>
+        <div class="member-class">ม.4/1</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <p class="section-label">ติดต่อเรา</p>
+    <h2 class="section-title">ร่วมเป็นส่วนหนึ่ง<br>ของ CCC</h2>
+    <div class="gold-line"></div>
+    <p class="contact-desc">
+      สนใจเข้าร่วมชมรมหรือต้องการข้อมูลเพิ่มเติม ติดต่อเราได้ผ่านช่องทางด้านล่าง<br>
+      รับสมัครสมาชิกใหม่ทุกต้นปีการศึกษา ยินดีต้อนรับนักเรียนทุกชั้นปี
+    </p>
+    <div class="contact-links">
+      <a href="#" class="contact-link">
+        <span class="contact-icon">📘</span>
+        <span>Facebook: CCC Chumpae</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">📍</span>
+        <span>ห้องภาษา อาคาร 3 ชั้น 2</span>
+      </a>
+      <a href="#" class="contact-link">
+        <span class="contact-icon">📱</span>
+        <span>LINE: @ccc_chumpae</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CCC</div>
+  <div class="footer-text">
+    ชมรมต่อคำศัพท์ภาษาอังกฤษ โรงเรียนชุมแพศึกษา<br>
+    Chumpae Crossword Club · Chumpae Süksa School
+  </div>
+  <div class="footer-right">© 2567 CCC</div>
+</footer>
+
+<script>
+  // Floating letters
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const container = document.getElementById('lettersFloat');
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'float-letter';
+    el.textContent = letters[Math.floor(Math.random() * letters.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.animationDuration = (12 + Math.random() * 20) + 's';
+    el.style.animationDelay = (Math.random() * 20) + 's';
+    el.style.fontSize = (60 + Math.random() * 100) + 'px';
+    container.appendChild(el);
+  }
+
+  // Smooth nav highlight
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 200) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+</body>
+</html>

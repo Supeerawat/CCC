@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
+ 
   :root {
     --navy: #0a1628;
     --deep: #0d1f3c;
@@ -38,6 +38,21 @@
       linear-gradient(90deg, rgba(201,162,39,0.04) 1px, transparent 1px);
     background-size: 60px 60px;
     pointer-events: none;
+  }
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 4rem;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,162,39,0.2);
+  }
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(201,162,39,0.4);
   }
 
   /* glow blobs */
@@ -228,6 +243,10 @@
 </style>
 </head>
 <body>
+<nav>
+  <div class="nav-logo" style="cursor: pointer;" onclick="location.href='index.html';">กลับหน้าหลัก</div>
+  <div></div>
+</nav>
 
 <div class="blob blob-1"></div>
 <div class="blob blob-2"></div>

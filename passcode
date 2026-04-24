@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC · ล็อกอิน</title>
+<link rel="icon" href="cccicon.png' type='image/png'>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0a1628;
+    --deep: #0d1f3c;
+    --gold: #c9a227;
+    --gold-light: #e8c247;
+    --cream: #f5f0e8;
+    --gray: #8a8fa8;
+  }
+
+  body {
+    background: var(--navy);
+    font-family: 'Sarabun', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* grid bg */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,162,39,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,162,39,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* glow blobs */
+  .blob {
+    position: fixed; border-radius: 50%;
+    filter: blur(80px); pointer-events: none; z-index: 0;
+  }
+  .blob-1 {
+    width: 500px; height: 500px;
+    background: rgba(26,58,107,0.4);
+    top: -100px; left: -100px;
+  }
+  .blob-2 {
+    width: 400px; height: 400px;
+    background: rgba(201,162,39,0.08);
+    bottom: -80px; right: -80px;
+  }
+
+  .card {
+    position: relative; z-index: 1;
+    background: rgba(13,31,60,0.85);
+    border: 1px solid rgba(201,162,39,0.2);
+    backdrop-filter: blur(20px);
+    padding: 3.5rem 3rem;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    animation: fadeUp 0.7s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    letter-spacing: 8px;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(201,162,39,0.4);
+    line-height: 1;
+  }
+
+  .subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-top: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .lock-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .label {
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+    text-align: left;
+  }
+
+  .input-wrap {
+    position: relative;
+    margin-bottom: 1.5rem;
+  }
+
+  input[type="password"] {
+    width: 100%;
+    padding: 0.9rem 3rem 0.9rem 1.2rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(201,162,39,0.25);
+    color: var(--cream);
+    font-family: 'Sarabun', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+  }
+
+  input[type="password"]:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+  }
+
+  input[type="password"]::placeholder {
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    color: rgba(138,143,168,0.5);
+  }
+
+  .toggle-pw {
+    position: absolute; right: 1rem; top: 50%;
+    transform: translateY(-50%);
+    background: none; border: none;
+    cursor: pointer; color: var(--gray);
+    font-size: 1.1rem;
+    transition: color 0.2s;
+    padding: 0;
+  }
+  .toggle-pw:hover { color: var(--gold); }
+
+  .btn {
+    width: 100%;
+    padding: 0.9rem;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    font-family: 'Sarabun', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+    transition: all 0.3s;
+  }
+  .btn:hover {
+    background: var(--gold-light);
+    box-shadow: 0 8px 30px rgba(201,162,39,0.35);
+    transform: translateY(-1px);
+  }
+  .btn:active { transform: translateY(0); }
+
+  .error-msg {
+    margin-top: 1.2rem;
+    font-size: 0.85rem;
+    color: #ff6b6b;
+    letter-spacing: 1px;
+    min-height: 1.2rem;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .error-msg.show { opacity: 1; }
+
+  .shake {
+    animation: shake 0.4s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20%      { transform: translateX(-8px); }
+    40%      { transform: translateX(8px); }
+    60%      { transform: translateX(-6px); }
+    80%      { transform: translateX(6px); }
+  }
+
+  .success-overlay {
+    position: fixed; inset: 0; z-index: 99;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 1rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s;
+  }
+  .success-overlay.show { opacity: 1; pointer-events: all; }
+  .success-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem; letter-spacing: 10px;
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(201,162,39,0.5);
+  }
+  .success-text {
+    color: var(--cream); font-size: 1rem;
+    letter-spacing: 2px; opacity: 0.7;
+  }
+
+  .divider {
+    width: 40px; height: 2px;
+    background: rgba(201,162,39,0.3);
+    margin: 0 auto 2rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<div class="card" id="card">
+  <div class="logo">CCC</div>
+  <div class="subtitle">Chumpae Crossword Club</div>
+  <div class="divider"></div>
+
+  <span class="lock-icon">🔒</span>
+
+  <div class="label">รหัสผ่าน</div>
+  <div class="input-wrap">
+    <input type="password" id="pwInput" placeholder="กรอกรหัสผ่าน" autocomplete="off" />
+    <button class="toggle-pw" id="toggleBtn" tabindex="-1" title="แสดง/ซ่อนรหัสผ่าน">👁</button>
+  </div>
+
+  <button class="btn" id="submitBtn">เข้าสู่ระบบ</button>
+  <div class="error-msg" id="errorMsg">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
+</div>
+
+<!-- Success flash -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-logo">CCC</div>
+  <div class="success-text">✅ กำลังเข้าสู่ระบบ...</div>
+</div>
+
+<script>
+  const CORRECT = 'ccc2567';
+  const TARGET_URL = 'members.html'; // เปลี่ยนเป็น URL หน้ารายชื่อสมาชิก
+
+  const input    = document.getElementById('pwInput');
+  const submitBtn= document.getElementById('submitBtn');
+  const errorMsg = document.getElementById('errorMsg');
+  const toggleBtn= document.getElementById('toggleBtn');
+  const overlay  = document.getElementById('successOverlay');
+  const card     = document.getElementById('card');
+
+  // show/hide password
+  toggleBtn.addEventListener('click', () => {
+    const isHidden = input.type === 'password';
+    input.type = isHidden ? 'text' : 'password';
+    toggleBtn.textContent = isHidden ? '🙈' : '👁';
+  });
+
+  // submit on Enter
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter') check();
+  });
+
+  submitBtn.addEventListener('click', check);
+
+  function check() {
+    if (input.value === CORRECT) {
+      // success
+      errorMsg.classList.remove('show');
+      overlay.classList.add('show');
+      setTimeout(() => {
+        window.open(TARGET_URL, '_blank');
+        // reset after opening
+        setTimeout(() => {
+          overlay.classList.remove('show');
+          input.value = '';
+        }, 800);
+      }, 800);
+    } else {
+      // wrong
+      errorMsg.classList.add('show');
+      card.classList.remove('shake');
+      void card.offsetWidth; // reflow
+      card.classList.add('shake');
+      input.select();
+    }
+  }
+</script>
+</body>
+</html>

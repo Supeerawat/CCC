@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CCC · ล็อกอิน</title>
-<link rel="icon" type='image/png' href="cccicon.png" >
+<link rel="icon" type="image/png" href="cccicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Sarabun:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -112,40 +112,48 @@
     margin-bottom: 1.5rem;
   }
 
-  input[type="password"] {
+  input[type="text"] {
     width: 100%;
-    padding: 0.9rem 3rem 0.9rem 1.2rem;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,162,39,0.25);
+    padding: 1rem 1.2rem;
+    background: rgba(255,255,255,0.03);
+    border: none;
+    border-bottom: 2px solid rgba(201,162,39,0.4);
+    border-radius: 4px 4px 0 0;
     color: var(--cream);
     font-family: 'Sarabun', sans-serif;
-    font-size: 1.1rem;
-    letter-spacing: 4px;
+    font-size: 1.2rem;
+    letter-spacing: 6px;
     outline: none;
-    transition: border 0.3s, box-shadow 0.3s;
+    transition: all 0.3s;
+    box-shadow: inset 0 -1px 0 transparent;
   }
 
-  input[type="password"]:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 3px rgba(201,162,39,0.12);
+  input[type="text"]:focus {
+    background: rgba(201,162,39,0.06);
+    border-bottom-color: var(--gold);
+    box-shadow: inset 0 -2px 0 var(--gold);
   }
 
-  input[type="password"]::placeholder {
-    letter-spacing: 2px;
+  input[type="text"]::placeholder {
+    letter-spacing: 3px;
     font-size: 0.85rem;
-    color: rgba(138,143,168,0.5);
+    color: rgba(138,143,168,0.45);
   }
 
-  .toggle-pw {
-    position: absolute; right: 1rem; top: 50%;
-    transform: translateY(-50%);
-    background: none; border: none;
-    cursor: pointer; color: var(--gray);
-    font-size: 1.1rem;
-    transition: color 0.2s;
-    padding: 0;
+  .input-wrap::after {
+    content: '';
+    display: block;
+    height: 2px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    margin-top: -2px;
   }
-  .toggle-pw:hover { color: var(--gold); }
+
+  .input-wrap:focus-within::after {
+    transform: scaleX(1);
+  }
 
   .btn {
     width: 100%;
@@ -234,7 +242,7 @@
     <input type="text" id="pwInput" placeholder="กรอกรหัสผ่าน" autocomplete="off" />
   </div>
 
-  <button class="btn" id="submitBtn">เข้าสู่ระบบ</button>
+  <button class="btn" id="submitBtn">ส่งรหัสผ่าน</button>
   <div class="error-msg" id="errorMsg">❌ รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</div>
 </div>
 
@@ -245,24 +253,22 @@
 </div>
 
 <script>
-  const CORRECT = 'ccc2567';
-  const TARGET_URL = 'members.html'; // เปลี่ยนเป็น URL หน้ารายชื่อสมาชิก
+  // ══════════════════════════════════════════
+  //  เพิ่ม / แก้ไขรหัสผ่านและ URL ที่นี่
+  // ══════════════════════════════════════════
+  const PASSWORDS = {
+    'ccc2567'  : 'members.html',  
+    'admin888' : 'admin.html',     
+    'guest123' : 'guest.html',    
+  };
+  // ══════════════════════════════════════════
 
-  const input    = document.getElementById('pwInput');
-  const submitBtn= document.getElementById('submitBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  const toggleBtn= document.getElementById('toggleBtn');
-  const overlay  = document.getElementById('successOverlay');
-  const card     = document.getElementById('card');
+  const input     = document.getElementById('pwInput');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorMsg  = document.getElementById('errorMsg');
+  const overlay   = document.getElementById('successOverlay');
+  const card      = document.getElementById('card');
 
-  // show/hide password
-  toggleBtn.addEventListener('click', () => {
-    const isHidden = input.type === 'password';
-    input.type = isHidden ? 'text' : 'password';
-    toggleBtn.textContent = isHidden ? '🙈' : '👁';
-  });
-
-  // submit on Enter
   input.addEventListener('keydown', e => {
     if (e.key === 'Enter') check();
   });
@@ -270,23 +276,21 @@
   submitBtn.addEventListener('click', check);
 
   function check() {
-    if (input.value === CORRECT) {
-      // success
+    const target = PASSWORDS[input.value.trim()];
+    if (target) {
       errorMsg.classList.remove('show');
       overlay.classList.add('show');
       setTimeout(() => {
-        window.open(TARGET_URL, '_blank');
-        // reset after opening
+        window.open(target, '_blank');
         setTimeout(() => {
           overlay.classList.remove('show');
           input.value = '';
         }, 800);
       }, 800);
     } else {
-      // wrong
       errorMsg.classList.add('show');
       card.classList.remove('shake');
-      void card.offsetWidth; // reflow
+      void card.offsetWidth;
       card.classList.add('shake');
       input.select();
     }

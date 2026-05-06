@@ -362,7 +362,191 @@
     border: 1px solid rgba(201,162,39,0.4);
     font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
     color: var(--gold);
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 1;
   }
+  .card-badge:hover {
+    background: rgba(201,162,39,0.15);
+    border-color: var(--gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(201,162,39,0.25);
+    color: var(--gold-light);
+  }
+  .card-badge::before {
+    content: '▸ ';
+    font-size: 0.7rem;
+  }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(6, 14, 26, 0.85);
+    backdrop-filter: blur(16px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 2rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .modal-overlay.active {
+    opacity: 1; pointer-events: all;
+  }
+
+  .modal-box {
+    background: linear-gradient(145deg, #0d1f3c, #0a1628);
+    border: 1px solid rgba(201,162,39,0.3);
+    max-width: 620px; width: 100%;
+    position: relative;
+    box-shadow:
+      0 40px 100px rgba(0,0,0,0.8),
+      0 0 0 1px rgba(201,162,39,0.1),
+      inset 0 1px 0 rgba(201,162,39,0.15);
+    transform: translateY(30px) scale(0.96);
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s ease;
+    opacity: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .modal-overlay.active .modal-box {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  /* Corner accents */
+  .modal-box::before,
+  .modal-box::after {
+    content: '';
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .modal-box::before {
+    top: 0; left: 0;
+    border-width: 2px 0 0 2px;
+  }
+  .modal-box::after {
+    bottom: 0; right: 0;
+    border-width: 0 2px 2px 0;
+  }
+
+  .modal-close {
+    position: absolute; top: 1rem; right: 1rem;
+    width: 36px; height: 36px;
+    background: rgba(201,162,39,0.1);
+    border: 1px solid rgba(201,162,39,0.3);
+    color: var(--gold);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s;
+    z-index: 10;
+    line-height: 1;
+    font-weight: 300;
+  }
+  .modal-close:hover {
+    background: rgba(201,162,39,0.25);
+    border-color: var(--gold);
+    transform: rotate(90deg);
+    box-shadow: 0 0 20px rgba(201,162,39,0.3);
+  }
+
+  .modal-image-area {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: linear-gradient(135deg, #0a1628 0%, #1a3a6b 50%, #0d1f3c 100%);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
+  }
+  .modal-image-area img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .modal-image-placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem; width: 100%; height: 100%;
+  }
+  .modal-image-placeholder .placeholder-icon {
+    font-size: 4rem;
+    filter: drop-shadow(0 0 20px rgba(201,162,39,0.5));
+  }
+  .modal-image-placeholder .placeholder-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 4px;
+    color: rgba(201,162,39,0.5);
+  }
+
+  /* Gold shimmer line under image */
+  .modal-image-area::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .modal-body {
+    padding: 2rem 2.5rem 2.5rem;
+  }
+
+  .modal-badge-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+  .modal-badge-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem; letter-spacing: 3px;
+    color: var(--gold);
+    background: rgba(201,162,39,0.1);
+    border: 1px solid rgba(201,162,39,0.3);
+    padding: 0.25rem 0.75rem;
+  }
+  .modal-year-tag {
+    font-size: 0.8rem; letter-spacing: 2px;
+    color: var(--gray);
+    font-family: 'Bebas Neue', sans-serif;
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--white);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+
+  .modal-divider {
+    width: 40px; height: 2px;
+    background: var(--gold);
+    margin-bottom: 1.2rem;
+  }
+
+  .modal-desc {
+    color: rgba(245,240,232,0.75);
+    line-height: 1.9;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  .modal-detail {
+    background: rgba(201,162,39,0.05);
+    border-left: 2px solid var(--gold);
+    padding: 1rem 1.2rem;
+    color: rgba(245,240,232,0.65);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-top: 1rem;
+  }
+
+  /* Scrollbar styling for modal */
+  .modal-box::-webkit-scrollbar { width: 4px; }
+  .modal-box::-webkit-scrollbar-track { background: var(--navy); }
+  .modal-box::-webkit-scrollbar-thumb { background: var(--gold); opacity: 0.5; }
 
   /* ─── ACTIVITIES ─── */
   #activities { background: var(--navy); }
@@ -497,6 +681,9 @@
     .timeline-year { min-width: 70px; font-size: 1.4rem; }
     .activities-grid { grid-template-columns: 1fr; }
     footer { flex-direction: column; text-align: center; padding: 2rem; }
+    .modal-body { padding: 1.5rem; }
+    .modal-title { font-size: 1.2rem; }
+    .modal-box { max-height: 85vh; }
   }
 </style>
 </head>
@@ -632,7 +819,7 @@
         <div class="card-year">2568 · ระดับชาติ</div>
         <div class="card-title" style="font-size: 1.1rem;">รางวัลกลุ่มเด็กและเยาวชนดีเด่นแห่งชาติ</div>
         <div class="card-desc">ได้รับรางวัลกลุ่มเด็กและเยาวชนดีเด่นแห่งชาติ สาขา การศึกษา กีฬา และนันทนาการ</div>
-        <span class="card-badge">👑 รางวัลพระราชทาน</span>
+        <span class="card-badge" onclick="openModal(0)">👑 รางวัลพระราชทาน</span>
       </div>
 
       <div class="achievement-card">
@@ -640,7 +827,7 @@
         <div class="card-year">2567-2568 · ระดับชาติ</div>
         <div class="card-title">แชมป์ GE CHALLENGE 2 ปีซ้อน</div>
         <div class="card-desc">ได้รับรางวัลชนะเลิศ 2 ปีซ้อน ทั้งในระดับชั้น ม.ต้นและม.ปลาย</div>
-        <span class="card-badge">🥇 ชนะเลิศ ม.ต้น/ม.ปลาย</span>
+        <span class="card-badge" onclick="openModal(1)">🥇 ชนะเลิศ ม.ต้น/ม.ปลาย</span>
       </div>
 
       <div class="achievement-card">
@@ -648,7 +835,7 @@
         <div class="card-year">2568 · ระดับชาติ</div>
         <div class="card-title">นักกีฬาเยาวชนทีมชาติไทย</div>
         <div class="card-desc">ชมรมยังคงมุุ่งมั่นในการฝึกฝนนักกีฬา เพื่อเข้าแข่งขันในระดับนานาชาติ</div>
-        <span class="card-badge">🎯 ยอดรวม 8 คน</span>
+        <span class="card-badge" onclick="openModal(2)">🎯 ยอดรวม 8 คน</span>
       </div>
 
       <div class="achievement-card">
@@ -656,7 +843,7 @@
         <div class="card-year">2567 · ระดับชาติ</div>
         <div class="card-title" style="font-size: 1.1rem;">รางวัลผู้ทำคุณประโยชน์แก่เด็กและเยาวชน</div>
         <div class="card-desc">ครูผู้ฝึกสอน "นายเอกดำรงค์ ถวิลรักษ์" ผ่านการคัดเลือกเป็นตัวแทนจังหวัดขอนแก่น ประเภทผู้ทำคุณประโยชน์แก่เด็กและเยาวชน </div>
-        <span class="card-badge">👨‍🎓 ตัวแทนจังหวัดขอนแก่น</span>
+        <span class="card-badge" onclick="openModal(3)">👨‍🎓 ตัวแทนจังหวัดขอนแก่น</span>
       </div>
 
       <div class="achievement-card">
@@ -664,7 +851,7 @@
         <div class="card-year">2567 · ระดับจังหวัด</div>
         <div class="card-title">รางวัลเด็กและเยาวชนดีเด่น</div>
         <div class="card-desc">สมาชิก CCC ได้รับการคัดเลือกเป็นเด็กและเยาวชนดีเด่น จังหวัดขอนแก่น เนื่องในวันเด็กและเยาวชนแห่งชาติ ประจำปี 2567</div>
-        <span class="card-badge">👑 รวม 4 รางวัล</span>
+        <span class="card-badge" onclick="openModal(4)">👑 รวม 4 รางวัล</span>
       </div>
 
       <div class="achievement-card">
@@ -672,7 +859,7 @@
         <div class="card-year">2567-2568 · ระดับชาติ</div>
         <div class="card-title">รางวัลถ้วยคะแนนรวม 2 ปี</div>
         <div class="card-desc">รางวัลที่เกิดจากความพยายามของสมาชิก CCC จากรายการ ACN BOARD GAME 2024/2025 ชิงถ้วยพระราชทาน</div>
-        <span class="card-badge">✨ ถ้วยเกียรติยศ 2 ปีซ้อน</span>
+        <span class="card-badge" onclick="openModal(5)">✨ ถ้วยเกียรติยศ 2 ปีซ้อน</span>
       </div>
 
     </div>
@@ -792,8 +979,132 @@
   </div>
 </footer>
 
+<!-- ─── MODAL ─── -->
+<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+  <div class="modal-box" id="modalBox">
+    <button class="modal-close" onclick="closeModal()" aria-label="ปิด">✕</button>
+
+    <div class="modal-image-area" id="modalImageArea">
+      <!-- Image or placeholder rendered by JS -->
+    </div>
+
+    <div class="modal-body">
+      <div class="modal-badge-row">
+        <span class="modal-badge-tag" id="modalBadgeTag"></span>
+        <span class="modal-year-tag" id="modalYearTag"></span>
+      </div>
+      <div class="modal-title" id="modalTitle"></div>
+      <div class="modal-divider"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-detail" id="modalDetail"></div>
+    </div>
+  </div>
+</div>
+
 <script>
-  // Floating letters
+  // ─── Achievement modal data ───
+  const achievementData = [
+    {
+      icon: '📚',
+      badge: '👑 รางวัลพระราชทาน',
+      year: '2568 · ระดับชาติ',
+      title: 'รางวัลกลุ่มเด็กและเยาวชนดีเด่นแห่งชาติ',
+      desc: 'ชมรม CCC ได้รับรางวัลกลุ่มเด็กและเยาวชนดีเด่นแห่งชาติ สาขาการศึกษา กีฬา และนันทนาการ ซึ่งเป็นรางวัลอันทรงเกียรติสูงสุดที่ยืนยันถึงคุณภาพและความมุ่งมั่นของชมรม',
+      detail: 'รางวัลนี้คัดเลือกจากกลุ่มเด็กและเยาวชนทั่วประเทศ โดยพิจารณาจากผลงานด้านการศึกษา ความประพฤติ และการมีส่วนร่วมในกิจกรรมที่เป็นประโยชน์ต่อสังคม สมาชิกชมรม CCC ได้รับพระราชทานรางวัลในพิธีอันยิ่งใหญ่ ซึ่งเป็นเกียรติแก่ทั้งชมรมและโรงเรียนชุมแพศึกษา',
+      image: null
+    },
+    {
+      icon: '🎖️',
+      badge: '🥇 ชนะเลิศ ม.ต้น/ม.ปลาย',
+      year: '2567-2568 · ระดับชาติ',
+      title: 'แชมป์ GE CHALLENGE 2 ปีซ้อน',
+      desc: 'CCC คว้าแชมป์ GE CHALLENGE ได้ถึง 2 ปีติดต่อกัน ทั้งระดับชั้น ม.ต้น และ ม.ปลาย แสดงให้เห็นถึงความเข้มแข็งของชมรมในทุกระดับชั้น',
+      detail: 'รายการ GE CHALLENGE เป็นการแข่งขันต่อคำศัพท์ภาษาอังกฤษระดับชาติ ที่มีสถาบันการศึกษาชั้นนำทั่วประเทศเข้าร่วมแข่งขัน การที่ CCC สามารถคว้าแชมป์ได้ 2 ปีซ้อนถือเป็นความสำเร็จที่น่าภาคภูมิใจยิ่ง สะท้อนถึงมาตรฐานการฝึกซ้อมและความสามารถของนักกีฬาชมรม',
+      image: null
+    },
+    {
+      icon: '⭐',
+      badge: '🎯 ยอดรวม 8 คน',
+      year: '2568 · ระดับชาติ',
+      title: 'นักกีฬาเยาวชนทีมชาติไทย',
+      desc: 'สมาชิกชมรม CCC จำนวนทั้งสิ้น 8 คน ผ่านการคัดเลือกเป็นนักกีฬาเยาวชนทีมชาติไทย เพื่อเข้าแข่งขันในรายการระดับนานาชาติ',
+      detail: 'การเป็นนักกีฬาทีมชาติถือเป็นเกียรติสูงสุดสำหรับนักกีฬาครอสเวิร์ด สมาชิก CCC ที่ผ่านการคัดเลือกต้องผ่านกระบวนการทดสอบความสามารถระดับชาติอย่างเข้มข้น และได้เป็นตัวแทนประเทศไทยในเวทีระดับนานาชาติ ซึ่งนับเป็นความภาคภูมิใจของทั้งชมรมและประเทศ',
+      image: null
+    },
+    {
+      icon: '🎇',
+      badge: '👨‍🎓 ตัวแทนจังหวัดขอนแก่น',
+      year: '2567 · ระดับชาติ',
+      title: 'รางวัลผู้ทำคุณประโยชน์แก่เด็กและเยาวชน',
+      desc: 'ครูเอกดำรงค์ ถวิลรักษ์ ผู้ก่อตั้งและที่ปรึกษาชมรม CCC ได้รับการคัดเลือกเป็นตัวแทนจังหวัดขอนแก่น ในฐานะผู้ทำคุณประโยชน์แก่เด็กและเยาวชน',
+      detail: 'ครูเอกดำรงค์อุทิศตนเพื่อพัฒนาศักยภาพนักเรียนผ่านกีฬาครอสเวิร์ดมาตั้งแต่ปี 2565 ด้วยความมุ่งมั่นและเสียสละ จนสามารถสร้างนักกีฬาระดับชาติได้มากมาย รางวัลนี้เป็นการยืนยันถึงคุณูปการที่ท่านมีต่อวงการเยาวชนไทย',
+      image: null
+    },
+    {
+      icon: '✨',
+      badge: '👑 รวม 4 รางวัล',
+      year: '2567 · ระดับจังหวัด',
+      title: 'รางวัลเด็กและเยาวชนดีเด่น จังหวัดขอนแก่น',
+      desc: 'สมาชิก CCC จำนวน 4 คน ได้รับการคัดเลือกเป็นเด็กและเยาวชนดีเด่น จังหวัดขอนแก่น เนื่องในวันเด็กและเยาวชนแห่งชาติ ประจำปี 2567',
+      detail: 'รางวัลเด็กและเยาวชนดีเด่นระดับจังหวัดพิจารณาจากความประพฤติ ผลการเรียน และผลงานที่โดดเด่น การที่สมาชิก CCC ได้รับรางวัลนี้ถึง 4 คน แสดงให้เห็นว่าชมรมได้บ่มเพาะทั้งความสามารถและคุณธรรมให้กับสมาชิกอย่างแท้จริง',
+      image: null
+    },
+    {
+      icon: '🏆',
+      badge: '✨ ถ้วยเกียรติยศ 2 ปีซ้อน',
+      year: '2567-2568 · ระดับชาติ',
+      title: 'รางวัลถ้วยคะแนนรวม ACN BOARD GAME',
+      desc: 'CCC คว้ารางวัลถ้วยคะแนนรวมจากรายการ ACN BOARD GAME ชิงถ้วยพระราชทาน ได้ถึง 2 ปีติดต่อกัน ปี 2024 และ 2025',
+      detail: 'รายการ ACN BOARD GAME เป็นการแข่งขันบอร์ดเกมและครอสเวิร์ดระดับชาติ ที่มีทีมเข้าร่วมแข่งขันจากทั่วประเทศ รางวัลถ้วยคะแนนรวมพิจารณาจากผลการแข่งขันตลอดทั้งปี ความสำเร็จ 2 ปีซ้อนนี้คือหลักฐานที่ชัดเจนของความมั่นคงและความเหนือกว่าของ CCC ในระดับชาติ',
+      image: null
+    }
+  ];
+
+  function openModal(index) {
+    const data = achievementData[index];
+    const overlay = document.getElementById('modalOverlay');
+    const imageArea = document.getElementById('modalImageArea');
+
+    document.getElementById('modalBadgeTag').textContent = data.badge;
+    document.getElementById('modalYearTag').textContent = data.year;
+    document.getElementById('modalTitle').textContent = data.title;
+    document.getElementById('modalDesc').textContent = data.desc;
+    document.getElementById('modalDetail').textContent = data.detail;
+
+    // Render image or placeholder
+    if (data.image) {
+      imageArea.innerHTML = `<img src="${data.image}" alt="${data.title}" onerror="this.parentElement.innerHTML=renderPlaceholder('${data.icon}', '${data.title}')">`;
+    } else {
+      imageArea.innerHTML = `
+        <div class="modal-image-placeholder">
+          <div class="placeholder-icon">${data.icon}</div>
+          <div class="placeholder-label">${data.year}</div>
+        </div>
+      `;
+    }
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    const overlay = document.getElementById('modalOverlay');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('modalOverlay')) {
+      closeModal();
+    }
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
+  });
+
+  // ─── Floating letters ───
   const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const container = document.getElementById('lettersFloat');
   for (let i = 0; i < 18; i++) {
@@ -807,7 +1118,7 @@
     container.appendChild(el);
   }
 
-  // Smooth nav highlight
+  // ─── Smooth nav highlight ───
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
